@@ -15,11 +15,9 @@ namespace NetworkMonitor
             InitializeComponent();
             LoadActiveConnections();
 
-            // Запуск обновления данных о трафике
             UpdateTrafficData();
         }
 
-        // Получение имени сетевого интерфейса
         private string GetNetworkInterfaceName()
         {
             var activeInterfaces = NetworkInterface.GetAllNetworkInterfaces()
@@ -32,11 +30,9 @@ namespace NetworkMonitor
                 return null;
             }
 
-            // Возвращаем имя первого активного интерфейса
             return activeInterfaces.First().Name;
         }
 
-        // Обновление данных о трафике
         private async void UpdateTrafficData()
         {
             var interfaces = NetworkInterface.GetAllNetworkInterfaces()
@@ -51,7 +47,7 @@ namespace NetworkMonitor
 
             while (true)
             {
-                await Task.Delay(1000); // Обновление каждую секунду
+                await Task.Delay(1000); 
 
                 long totalIncoming = 0;
                 long totalOutgoing = 0;
@@ -90,7 +86,6 @@ namespace NetworkMonitor
             return $"{value:0.##} {units[i]}";
         }
 
-        // Загрузка активных подключений
         private void LoadActiveConnections()
         {
             var activeConnections = new List<ConnectionInfo>();
@@ -113,7 +108,6 @@ namespace NetworkMonitor
             ActiveConnectionsGrid.ItemsSource = activeConnections;
         }
 
-        // Блокировка IP-адреса
         private void BlockIp_Click(object sender, RoutedEventArgs e)
         {
             string ip = IpToBlockTextBox.Text;
@@ -124,7 +118,6 @@ namespace NetworkMonitor
             }
         }
 
-        // Блокировка порта
         private void BlockPort_Click(object sender, RoutedEventArgs e)
         {
             string port = PortToBlockTextBox.Text;
@@ -135,7 +128,7 @@ namespace NetworkMonitor
             }
         }
 
-        // Выполнение команды брандмауэра
+
         private void ExecuteFirewallCommand(string command)
         {
             ProcessStartInfo psi = new ProcessStartInfo("cmd.exe", $"/c {command}")
@@ -147,7 +140,6 @@ namespace NetworkMonitor
         }
     }
 
-    // Класс для хранения информации о подключениях
     public class ConnectionInfo
     {
         public string LocalAddress { get; set; }
